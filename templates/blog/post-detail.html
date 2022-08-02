@@ -5,13 +5,14 @@
 {% row %}
     {% col %}
         {% include "blog/post-byline.html" %}
-    {% endcol %
+{% endcol %}
 {% endrow %}
 {% row %}
     {% col %}
         {{ post.content|safe }}
     {% endcol %}
 {% endrow %}
+{% include "blog/post-comments.html" %}
 {% row %}
     {% col %}
         {% recent_posts post %}
