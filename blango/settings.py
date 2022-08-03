@@ -180,8 +180,7 @@ class Dev(Configuration):
     },
 }
 
-
-
+   
 
 class Prod(Dev):
     DEBUG = False
