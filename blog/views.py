@@ -1,10 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404,redirect 
 from django.utils import timezone
 from blog.models import Post
-from django.shortcuts import render, get_object_or_404
-from django.shortcuts import redirect
 from blog.forms import CommentForm
 import logging
+
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +12,8 @@ def index(request):
     posts = Post.objects.filter(published_at__lte=timezone.now())
     logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
+
+
 
 
 def post_detail(request, slug):
