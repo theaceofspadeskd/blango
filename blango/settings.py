@@ -63,6 +63,7 @@ class Dev(Configuration):
         "rest_framework",
         "rest_framework.authtoken",
         "drf_yasg",
+        "django_filters",
     ]
 
     MIDDLEWARE = [
@@ -213,6 +214,7 @@ class Dev(Configuration):
             "blog.api.throttling.UserSustainedThrottle",
             "blog.api.throttling.UserBurstThrottle",
         ],
+        
         "DEFAULT_THROTTLE_RATES": {
             "anon_sustained": "500/day",
             "anon_burst": "10/minute",
@@ -225,8 +227,17 @@ class Dev(Configuration):
             "rest_framework.authentication.SessionAuthentication",
             "rest_framework.authentication.TokenAuthentication",
         ],
+        
         "DEFAULT_PERMISSION_CLASSES": [
             "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+        ],
+        
+        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+        "PAGE_SIZE": 2,
+        
+        "DEFAULT_FILTER_BACKENDS": [
+            "django_filters.rest_framework.DjangoFilterBackend",
+            "rest_framework.filters.OrderingFilter",
         ],
     }   
 
