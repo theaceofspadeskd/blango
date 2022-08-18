@@ -14,6 +14,8 @@ from pathlib import Path
 from configurations import Configuration
 from configurations import values
 import dj_database_url
+from datetime import timedelta
+
 
 
 class Dev(Configuration):
@@ -208,6 +210,13 @@ class Dev(Configuration):
     ACCOUNT_AUTHENTICATION_METHOD = "email"
 
     REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+            "rest_framework.authentication.TokenAuthentication",
+            "rest_framework_simplejwt.authentication.JWTAuthentication"
+        ],
+
         "DEFAULT_THROTTLE_CLASSES": [
             "blog.api.throttling.AnonSustainedThrottle",
             "blog.api.throttling.AnonBurstThrottle",
@@ -221,12 +230,6 @@ class Dev(Configuration):
             "user_sustained": "5000/day",
             "user_burst": "100/minute",
         },
-
-        "DEFAULT_AUTHENTICATION_CLASSES": [
-            "rest_framework.authentication.BasicAuthentication",
-            "rest_framework.authentication.SessionAuthentication",
-            "rest_framework.authentication.TokenAuthentication",
-        ],
         
         "DEFAULT_PERMISSION_CLASSES": [
             "rest_framework.permissions.IsAuthenticatedOrReadOnly"
@@ -240,6 +243,11 @@ class Dev(Configuration):
             "rest_framework.filters.OrderingFilter",
         ],
     }   
+    
+    SIMPLE_JWT = {
+        "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+        "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    }
 
     SWAGGER_SETTINGS = {
         "SECURITY_DEFINITIONS": {
