@@ -44,7 +44,6 @@ class PostTable extends React.Component {
       ]
     }
   }
-
   render () {
     let rows
     if (this.state.dataLoaded) {
@@ -77,10 +76,37 @@ class PostTable extends React.Component {
       </tbody>
     </table>
   }
+  componentDidMount () {
+    fetch(this.props.url).then(response => {
+      if (response.status !== 200) {
+        throw new Error('Invalid status from server: ' + response.statusText)
+      }
+
+      return response.json()
+    }).then(data => {
+      this.setState({
+        dataLoaded: true,
+        data: data
+      })
+    }).catch(e => {
+      console.error(e)
+      this.setState({
+        dataLoaded: true,
+        data: {
+          results: []
+        }
+      })
+    })
+  }
 }
 
 const domContainer = document.getElementById('react_root')
 ReactDOM.render(
-  React.createElement(PostTable),
+  React.createElement(
+    PostTable,
+    {url: postListUrl}
+  ),
   domContainer
 )
+
+  
