@@ -32,10 +32,9 @@ class Dev(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
-    ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
-    X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
     CSRF_COOKIE_SAMESITE = None
-    CSRF_TRUSTED_ORIGINS = ['https://' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io']
+    CSRF_TRUSTED_ORIGINS = []
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SAMESITE = 'None'
@@ -77,7 +76,7 @@ class Dev(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
       # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        "debug_toolbar.middleware.DebugToolbarMiddleware",      
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
     ROOT_URLCONF = 'blango.urls'
@@ -144,7 +143,7 @@ class Dev(Configuration):
 
     USE_TZ = True
 
-    INTERNAL_IPS = ["192.168.10.226"]
+    INTERNAL_IPS = ["127.0.0.1"]
 
 
     # Static files (CSS, JavaScript, Images)
@@ -196,8 +195,8 @@ class Dev(Configuration):
         "level": "DEBUG",
     },
 }
-    
-    AUTH_USER_MODEL = "blango_auth.User" 
+
+    AUTH_USER_MODEL = "blango_auth.User"
 
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
@@ -228,27 +227,27 @@ class Dev(Configuration):
             "blog.api.throttling.UserSustainedThrottle",
             "blog.api.throttling.UserBurstThrottle",
         ],
-        
+
         "DEFAULT_THROTTLE_RATES": {
             "anon_sustained": "500/day",
             "anon_burst": "10/minute",
             "user_sustained": "5000/day",
             "user_burst": "100/minute",
         },
-        
+
         "DEFAULT_PERMISSION_CLASSES": [
             "rest_framework.permissions.IsAuthenticatedOrReadOnly"
         ],
-        
+
         "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
         "PAGE_SIZE": 2,
-        
+
         "DEFAULT_FILTER_BACKENDS": [
             "django_filters.rest_framework.DjangoFilterBackend",
             "rest_framework.filters.OrderingFilter",
         ],
-    }   
-    
+    }
+
     SIMPLE_JWT = {
         "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
         "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -260,11 +259,10 @@ class Dev(Configuration):
             "Basic": {"type": "basic"},
         }
     }
- 
-    
- 
+
+
+
 
 class Prod(Dev):
     DEBUG = False
     SECRET_KEY = values.SecretValue()
-
