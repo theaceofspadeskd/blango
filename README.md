@@ -1,4 +1,17 @@
-# Blango
+# blango
+
+Blog with DRF, Django Debug Toolbar, AllAuth, JWT implementations and other.
+
+Run in Docker:
+
+1. Pull image
+ ```
+ docker pull theaceofspadeskd/blango:v1 
+ ```
+2. Run container  
+ ```
+ docker run -p 8000:8000 theaceofspadeskd/blango:v1
+ ```   
 
 Installation:
 
